@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>board-query.xml file</comment>
+	
+	<!-- 게시글 목록 조회 -->
+	<entry key="selectAllBoard">
+		<![CDATA[  
+		SELECT BOARD_NO, BOARD_TITLE, MEMBER_NM, READ_COUNT, 
+			CASE  
+				WHEN SYSDATE - CREATE_DT < 1/24/60
+				THEN FLOOR( (SYSDATE - CREATE_DT) * 24 * 60 * 60 ) || '초 전'
+				WHEN SYSDATE - CREATE_DT < 1/24
+				THEN FLOOR( (SYSDATE - CREATE_DT) * 24 * 60) || '분 전'
+				WHEN SYSDATE - CREATE_DT < 1
+				THEN FLOOR( (SYSDATE - CREATE_DT) * 24) || '시간 전'
+				ELSE TO_CHAR(CREATE_DT, 'YYYY-MM-DD')
+			END CREATE_DT,
+			(SELECT COUNT(*) 
+			 FROM "COMMENT" C
+			 WHERE C.BOARD_NO = B.BOARD_NO) COMMENT_COUNT		
+		FROM "BOARD" B
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE DELETE_FL = 'N'
+		ORDER BY BOARD_NO DESC
+		]]>
+	</entry>
+	
+	
+	<!-- 게시글 상세 조회 -->
+	<entry key="selectBoard">
+	
+	</entry>
+	
+	
+	<!-- 조회 수 증가 -->
+	<entry key="increaseReadCount">
+		
+	</entry>
+	
+	
+	<!-- 게시글 수정 -->
+	<entry key="updateBoard">
+	
+	</entry>
+	
+	
+	<!-- 게시글 삭제 -->
+	<entry key="deleteBoard">
+	
+	</entry>
+	
+	
+	<!-- 게시글 등록 -->
+	<entry key="insertBoard">
+		INSERT INTO BOARD (BOARD_NO, BOARD_TITLE, BOARD_CONTENT, MEMBER_NO) 
+		VALUES(?, ?, ?, ?)
+	</entry>
+	
+	
+	<!-- 게시글 번호 생성 -->
+	<entry key="nextBoardNo">
+		SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+	</entry>
+	
+	
+	
+	<!-- 게시글 검색1(WHERE절 시작 까지)
+		&lt; == "<" 
+	 -->
+	<entry key="searchBoard1">
+		
+	</entry>
+	
+	<!-- 게시글 검색2(검색 조건) -->
+	<entry key="searchBoard2_1">  <!-- 제목 -->
+	
+	</entry>
+	<entry key="searchBoard2_2"> <!-- 내용 -->
+		
+	</entry>
+	<entry key="searchBoard2_3"> <!-- 제목 + 내용 -->
+	
+	</entry>
+	<entry key="searchBoard2_4"> <!-- 작성자 -->
+		
+	</entry>
+	
+	
+	<!-- 게시글 검색3(ORDER BY) -->
+	<entry key="searchBoard3">
+	
+	</entry>
+	
+	
+	
+	
+	
+	
+</properties>
+
+
+
